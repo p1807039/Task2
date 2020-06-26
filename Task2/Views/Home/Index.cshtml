@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Team Members</title>
+</head>
+<body>
+
+    <div>
+        <h2>All Members</h2>
+        <ul id="members" />
+    </div>
+    <div>
+        <h2>Search by ID</h2>
+        <input type="text" id="memberId" size="2" />
+        <input type="button" value="Search" onclick="find();" />
+        <p id="member" />
+    </div>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+        var uri = 'api/v2/members';
+
+        //Get List of Members Version 1
+        //$(document).ready(function () {
+        //    $.getJSON(uri)
+        //        .done(function (data) {
+        //            //console.log(data)
+        //            let x = 0;
+        //            $.each(data[x], function () {
+        //                $('<li>', { text: data[x].memberName }).appendTo($('#members'));
+        //                x++;
+        //            });
+        //        });
+        //});
+
+        ////Get Member by ID Version 1
+        //function find() {
+        //    var id = $('#memberId').val();
+        //    $.getJSON(uri + '/' + id)
+        //        .done(function (data, err) {
+        //            if (id == 1 || id == 2) {
+        //                console.log(data);
+        //                $('#member').text(data.Name);
+        //            }
+        //            else if (id > 2) {
+        //                $('#member').text('Error: ' + err);
+        //            }
+        //            else {
+        //                $('#member').text('Error: Please key in an ID number');
+        //            }
+        //        })
+        //        .fail(function (jqXHR, textStatus, err) {
+        //            $('#member').text('Error: ' + err);
+        //        });   
+        //}
+
+        //Get List of Members Version 2
+        $(document).ready(function () {
+            $.getJSON(uri)
+                .done(function (data) {
+                    let x = 0;
+                    $.each(data[x], function () {
+                        $('<li>', { text: data[x].Name }).appendTo($('#members'));
+                        //var $input = $('<a href="/api/v2/members/delete/' + x+1 + '"class="btn btn-primary btn-sm" value ="edit+ id="deleteButton">' + 'Delete' + '</a>');
+                        //$input.appendTo($("#members"));
+                        x++;
+                    });
+                });
+        });
+
+        //Get Member by ID Version 2
+        function find() {
+            var id = $('#memberId').val();
+            $.getJSON(uri + '/' + id)
+                .done(function (data, err) {
+                    if (id == 1 || id == 2) {
+                        console.log(data);
+                        $('#member').text(data.Name);
+                    }
+                    else if (id > 2) {
+                        $('#member').text('Error: ' + err);
+                    }
+                    else {
+                        $('#member').text('Error: Please key in an ID number');
+                    }
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#member').text('Error: ' + err);
+                });
+        }
+
+    </script>
+</body>
+</html>
